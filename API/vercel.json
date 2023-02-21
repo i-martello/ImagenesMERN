@@ -1,7 +1,7 @@
 {
   "version": 2,
-  "name": "petgram-server-TU_NOMBRE",
-  "alias": ["petgram-api-TU_NOMBRE"],
+  "name": "petgram-server-popa-web",
+  "alias": ["petgram-api-popa-web"],
   "builds": [{ "src": "index.js", "use": "@vercel/node" }],
   "routes": [{
     "headers": {
