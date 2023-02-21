@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "name": "petgram-TU_NOMBRE",
+  "name": "petgram-popa-web",
   "builds": [
       { "use": "@vercel/static-build", "src": "package.json"}
   ],
