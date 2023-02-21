@@ -16,7 +16,7 @@ const ImgDetails = () =>{
       setImage(res.data)
     })();
 
-  }, [])
+  }, [params.id])
 
   const handleDelete = async () => {
     await axios.delete(`http://localhost:4000/imagenes/${params.id}`)
