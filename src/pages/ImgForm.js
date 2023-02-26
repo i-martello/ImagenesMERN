@@ -25,7 +25,7 @@ const ImgForm = () => {
     formData.append('description', description);
 
     const res = await axios.post('http://localhost:4000/publicar', formData, {
-      header: {
+      headers: {
         "Content-Type": "multipart/form-data"
       },
       onUploadProgress(progressEvent) {

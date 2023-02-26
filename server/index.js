@@ -1,13 +1,26 @@
-import './database'
-import cors from 'cors'
-import express from 'express'
+import './database';
+import cors from 'cors';
+import { config } from 'dotenv';
+import express from 'express';
+import indexRoutes from './routes/index.routes'
+import usersRoutes from './routes/users.routes'
+
+
 
 const app = express()
-import routes from './routes/index.routes'
+config()
+
 
 app.set('port', process.env.PORT || 4000);
 
+// middlewares  
 app.use(cors());
-app.use(routes);
+app.use(express.json())
 
-app.listen(app.get('port'),console.log('server andando joya'));
+
+app.use(indexRoutes);
+app.use(usersRoutes);
+
+
+
+app.listen(app.get('port'), console.log('server andando joya'));

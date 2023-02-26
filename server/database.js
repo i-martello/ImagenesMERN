@@ -1,7 +1,7 @@
 import {config} from 'dotenv'
+import connectDB from 'mongoose'
 config()
 
-import connectDB from "mongoose"
 
 connectDB.set('strictQuery', false);
 

@@ -1,52 +1,19 @@
 import {Router} from 'express';
-import { uploadImage, deleteImage } from '../utils/cloudinary';
+import ctrlIndex from '../controllers/index.controller';
 import upload from '../utils/multer';
-import modelImage from '../models/images';
+import ctrlPosts from '../controllers/posts.controller'
+import verifyToken from '../settings/auth';
+
 
 const router = Router();
 
-router.get('/', async (req, res)=>{
-  const images = await modelImage.find()
-  res.json(images)
-})
 
-router.post('/publicar',upload.single("Value"), async (req, res)=>{
-  const {title, description} = req.body
-  if(!req.file){
-    return res.send('Subi una foto duro')
-  } 
-  try { 
+  router.get('/',verifyToken,ctrlIndex.index)
 
-    const cloudinary_image = await uploadImage(req.file.path)
-    console.log(cloudinary_image)
+  router.post('/publicar',upload.single("Value"), ctrlPosts.uploaded)
 
-    const newImage = await new modelImage({
-      title,
-      description,
-      cloud_id: cloudinary_image.public_id,
-      url: cloudinary_image.secure_url      
-    });
-    await newImage.save()
-    console.log("guardado con exito", newImage)
+  router.get('/imagenes/:id', ctrlIndex.details)
 
-  } catch (error) {
-    console.log(error)
-  } 
-    
-    res.json({success: 'imagen enviada'})
-  })
-
-  router.get('/imagenes/:id', async (req,res)=>{
-    const oneImage = await modelImage.findOne({cloud_id: req.params.id}) 
-    res.json(oneImage)
-  });
-
-  router.delete('/imagenes/:id', async (req,res)=>{
-    const deleteImg = await modelImage.findOneAndRemove({cloud_id: req.params.id})
-    res.json(deleteImg)
-
-    deleteImage(req.params.id)
-
-  })
+  router.delete('/imagenes/:id', ctrlPosts.Remove)
 
 export default router

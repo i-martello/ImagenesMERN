@@ -10,6 +10,24 @@ const ImgGallery = () => {
   const navigate = useNavigate();
   const params = useParams();
 
+  const token = localStorage.getItem("token");
+
+
+  useEffect(() => {
+    (async ()=> {
+    if (token) {
+      await axios.get(`http://localhost:4000`, {
+          headers: {
+            token: token,
+          },
+        })
+        .then(({ data }) => console.log(data.nombre))
+        .catch((error) => console.error(error));
+    }
+  })();
+  }, [token]);
+
+
   useEffect(() => {
 
     (async () => {
@@ -18,12 +36,13 @@ const ImgGallery = () => {
     })();
   }, [params.id])
 
+
   return (
     <div>
       <div className="Container-gallery">
         {image.map(item => {
           return (
-            <article className="articleGallery" key={item._id} onClick={()=> navigate(`/imagenes/${item.cloud_id}`)}>
+            <article className="articleGallery card-image" key={item._id} onClick={()=> navigate(`/imagenes/${item.cloud_id}`)}>
                 <div className="articleImage">
                   <img src={item.url} alt="" className="articleImg" />
                   <div className="titleImage">
